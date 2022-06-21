@@ -1,0 +1,219 @@
+{% extends "pages/base.html" %}
+
+{% block title %}{{post.title}}{% endblock %}
+
+{% block content %}
+    <section class="site-section py-lg">
+      <div class="container">
+        {% if user.username %}
+        <div class="mb-4 btn-edit">
+          <button class="btn btn-primary btn-blog-details"><a id="edit-color-a" href="{% url 'edit_post' post.id %}">Chỉnh sửa <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></button>
+          <button class="btn btn-danger btn-blog-details2"><a onclick="return confirm('Bài blog sẽ được xóa ?')" id="edit-color-a" href="{% url 'delete_post' post.id %}">Xóa Blog <i class="fa fa-trash" aria-hidden="true"></i></a></button>
+          <span class="set-views-styling">Chế độ xem:
+            {% if post.showblog == 1 %}
+            <a href="{% url 'hide_post' post.id %}"><i class="fa fa-eye" aria-hidden="true"></i></a> (Public)
+            {% else %}
+            <a href="{% url 'show_post' post.id %}"><i class="fa fa-eye-slash" aria-hidden="true"></i></a> (Private)</span>
+            {% endif %}
+        </div>
+        {% endif %}
+        <div class="row blog-entries element-animate">
+          <div class="col-md-12 col-lg-8 main-content">
+
+            <img src="{{post.image.url}}" alt="Image" class="img-fluid mb-5">
+             <div class="post-meta">
+                        <span class="author mr-2"><img src="/static/images/person_1.jpg" alt="Colorlib" class="mr-2"> Colorlib</span>&bullet;
+                        <span class="mr-2">{{post.date|date:"m-d-Y"}} </span> &bullet;
+                        <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
+                      </div>
+            <h1 class="mb-4">{{post.title}}</h1>
+            <a class="category mb-5" href="#">Food</a> <a class="category mb-5" href="#">Travel</a>
+
+            <div class="post-content-body">
+              {{post.content|safe}}
+            </div>
+            <div class="pt-5">
+              <p>Categories:  <a href="#">Food</a>, <a href="#">Travel</a>  Tags: <a href="#">#manila</a>, <a href="#">#asia</a></p>
+            </div>
+
+
+            <div class="pt-5">
+              <h3 class="mb-5">{{number}} bình luận</h3>
+              <ul class="comment-list">
+                {% for comment in comments %}
+                <li class="comment">
+                  <div class="vcard">
+                    <img src="/static/images/person_1.jpg" alt="Image placeholder">
+                  </div>
+                  <div class="comment-body">
+                    <div class="header-comment">
+                      <h3>{{comment.username}}</h3>
+                      {% if user.id == 1 %}
+                      <button class="btn btn-danger btn-edit-comment"><a onclick="return confirm('Bài blog sẽ được xóa ?')" href="{% url 'delete_comment' comment.id %}">Xóa</a></button>
+                      {% endif %}
+                    </div>
+                    <div class="meta">{{comment.date_comment}}</div>
+                    <p>{{comment.text_content}}</p>
+                    <p><a href="#" class="reply rounded">Reply</a></p>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+              <!-- END comment-list -->
+            </div>
+
+          </div>
+
+          <!-- END main-content -->
+
+          <div class="col-md-12 col-lg-4 sidebar">
+            <!-- END sidebar-box -->
+            <div class="sidebar-box">
+              <div class="bio text-center">
+                <img src="/static/images/person_2.jpg" alt="Image Placeholder" class="img-fluid">
+                <div class="bio-body">
+                  <h2>Craig David</h2>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem facilis sunt repellendus excepturi beatae porro debitis voluptate nulla quo veniam fuga sit molestias minus.</p>
+                  <p><a href="#" class="btn btn-primary btn-sm rounded">Thông tin tác giả</a></p>
+                  <p class="social">
+                    <a href="#" class="p-2"><span class="fa fa-facebook"></span></a>
+                    <a href="#" class="p-2"><span class="fa fa-twitter"></span></a>
+                    <a href="#" class="p-2"><span class="fa fa-instagram"></span></a>
+                    <a href="#" class="p-2"><span class="fa fa-youtube-play"></span></a>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- END sidebar-box -->
+            <div class="sidebar-box">
+              <h3 class="heading">Blog phổ biến</h3>
+              <div class="post-entry-sidebar">
+                <ul>
+                  <li>
+                    <a href="">
+                      <img src="/static/images/img_1.jpg" alt="Image placeholder" class="mr-4">
+                      <div class="text">
+                        <h4>There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
+                        <div class="post-meta">
+                          <span class="mr-2">March 15, 2018 </span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="">
+                      <img src="/static/images/img_1.jpg" alt="Image placeholder" class="mr-4">
+                      <div class="text">
+                        <h4>There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
+                        <div class="post-meta">
+                          <span class="mr-2">March 15, 2018 </span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="">
+                      <img src="/static/images/img_1.jpg" alt="Image placeholder" class="mr-4">
+                      <div class="text">
+                        <h4>There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
+                        <div class="post-meta">
+                          <span class="mr-2">March 15, 2018 </span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- END sidebar-box -->
+
+            <div class="sidebar-box">
+              <h3 class="heading">Danh mục</h3>
+              <ul class="categories">
+                 <li><a href="#">HTML <span>(12)</span></a></li>
+                 <li><a href="#">Bootstrap <span>(22)</span></a></li>
+                 <li><a href="#">JavaScript <span>(37)</span></a></li>
+                 <li><a href="#">Python <span>(42)</span></a></li>
+                 <li><a href="#">Flutter <span>(14)</span></a></li>
+              </ul>
+            </div>
+            <!-- END sidebar-box -->
+
+            <div class="sidebar-box">
+              <h3 class="heading">Tags</h3>
+              <ul class="tags">
+                <li><a href="#">Travel</a></li>
+                <li><a href="#">Adventure</a></li>
+                <li><a href="#">Food</a></li>
+                <li><a href="#">Lifestyle</a></li>
+                <li><a href="#">Business</a></li>
+                <li><a href="#">Freelancing</a></li>
+                <li><a href="#">Travel</a></li>
+                <li><a href="#">Adventure</a></li>
+                <li><a href="#">Food</a></li>
+                <li><a href="#">Lifestyle</a></li>
+                <li><a href="#">Business</a></li>
+                <li><a href="#">Freelancing</a></li>
+              </ul>
+            </div>
+          </div>
+          <!-- END sidebar -->
+
+        </div>
+      </div>
+    </section>
+
+    <section class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2 class="mb-3 ">Blog liên quan</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-lg-4">
+            <a href="#" class="a-block sm d-flex align-items-center height-md" style="background-image: url('/static/images/img_2.jpg'); ">
+              <div class="text">
+                <div class="post-meta">
+                  <span class="category">Lifestyle</span>
+                  <span class="mr-2">March 15, 2018 </span> &bullet;
+                  <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
+                </div>
+                <h3>There’s a Cool New Way for Men to Wear Socks and Sandals</h3>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <a href="#" class="a-block sm d-flex align-items-center height-md" style="background-image: url('/static/images/img_3.jpg'); ">
+              <div class="text">
+                <div class="post-meta">
+                  <span class="category">Travel</span>
+                  <span class="mr-2">March 15, 2018 </span> &bullet;
+                  <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
+                </div>
+                <h3>There’s a Cool New Way for Men to Wear Socks and Sandals</h3>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <a href="#" class="a-block sm d-flex align-items-center height-md" style="background-image: url('/static/images/img_4.jpg'); ">
+              <div class="text">
+                <div class="post-meta">
+                  <span class="category">Food</span>
+                  <span class="mr-2">March 15, 2018 </span> &bullet;
+                  <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
+                </div>
+                <h3>There’s a Cool New Way for Men to Wear Socks and Sandals</h3>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <!-- END section -->
+      <!-- END footer -->
+    </div>
+
+    <!-- loader -->
+{% endblock %}

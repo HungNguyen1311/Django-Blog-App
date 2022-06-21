@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!--    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300, 400,700|Inconsolata:400,700" rel="stylesheet">-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'fonts/ionicons/css/ionicons.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'fonts/fontawesome/css/font-awesome.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}" type="text/css">
+
+    <!-- Theme Style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+  </head>
+  <body>
+  <div class="wrap">
+      <header role="banner">
+        <div class="top-bar">
+          <div class="container">
+            <div class="row">
+              <div class="col-6 social">
+                <a href="#"><span class="fa fa-twitter"></span></a>
+                <a href="#"><span class="fa fa-facebook"></span></a>
+                <a href="#"><span class="fa fa-instagram"></span></a>
+                <a href="#"><span class="fa fa-youtube-play"></span></a>
+              </div>
+              <div class="col-6 search-top">
+                <!-- <a href="#"><span class="fa fa-search"></span></a> -->
+                <form action="/blog/search_blog/" class="search-top-form" method="POST">
+                  {% csrf_token %}
+                  <span class="icon fa fa-search"></span>
+                  <input type="text" name="blog_name" id="s" placeholder="Nhập từ khóa muốn tìm...">
+                </form>
+                {% if user.username %}
+                <nav class="navbar navbar-expand-md  navbar-light bg-light">
+                        <div class="container">
+                           <li class="nav-item dropdown edit-nav">
+                                  <a class="nav-link dropdown-toggle" href="category.html" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fa fa-user font-styling"></span></a>
+                                  <div class="dropdown-menu mt-1" aria-labelledby="dropdown06" >
+                                    <span class="dropdown-styling">Xin chào, {{user.username}}</span>
+                                    <a class="dropdown-item" href="category.html">- Quản lý tài khoản</a>
+                                    <a class="dropdown-item" href="{% url 'blog_manage' %}">- Quản lý blog</a>
+                                    <a class="dropdown-item" href="{% url 'logout' %}">- Đăng xuất</a>
+                                  </div>
+                            </li>
+                        </div>
+                </nav>
+<!--                <p id="hello-user">Xin chào, {{user.username}} <a id="logout-content" href="{% url 'logout' %}">Đăng xuất</a></p>-->
+                {% else %}
+                <a href="{% url 'login' %}" id="login-checkout">Đăng Nhập</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container logo-wrap">
+          <div class="row pt-5">
+            <div class="col-12 text-center">
+              <a class="absolute-toggle d-block d-md-none" data-toggle="collapse" href="#navbarMenu" role="button" aria-expanded="false" aria-controls="navbarMenu"><span class="burger-lines"></span></a>
+              <h1 class="site-logo"><a href="{% url 'blog' %}">Blogger Side</a></h1>
+            </div>
+          </div>
+        </div>
+
+        <nav class="navbar navbar-expand-md  navbar-light bg-light">
+          <div class="container">
+
+
+            <div class="collapse navbar-collapse" id="navbarMenu">
+              <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                  <a class="nav-link active" href="index.html">Trang chủ</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Mới nhất</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="category.html" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Danh mục</a>
+                  <div class="dropdown-menu" aria-labelledby="dropdown05">
+                    <a class="dropdown-item" href="category.html">News</a>
+                    <a class="dropdown-item" href="category.html">Mobile</a>
+                    <a class="dropdown-item" href="category.html">Gamming</a>
+                    <a class="dropdown-item" href="category.html">Sport</a>
+                    <a class="dropdown-item" href="category.html">Cars</a>
+                  </div>
+
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="about.html">Trendings</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="contact.html">Liên Hệ</a>
+                </li>
+              </ul>
+
+            </div>
+          </div>
+        </nav>
+      </header>
+
+  {% block content %}{% endblock %}
+  </div>
+  <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#f4b214"/></svg></div>
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery-migrate-3.0.0.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+<footer class="site-footer">
+        <div class="container">
+          <div class="row mb-5">
+            <div class="col-md-4">
+              <h3>Nhóm phát triển</h3>
+              <p class="mb-4">
+                <img src="/static/images/img_1.jpg" alt="Image placeholder" class="img-fluid">
+              </p>
+
+              <p>Lorem ipsum dolor sit amet sa ksal sk sa, consectetur adipisicing elit. Ipsa harum inventore reiciendis. <a href="#">Read More</a></p>
+            </div>
+            <div class="col-md-6 ml-auto">
+              <div class="row">
+                <div class="col-md-7">
+                  <h3>Blog mới</h3>
+                  <div class="post-entry-sidebar">
+                    <ul>
+                      <li>
+                        <a href="">
+                          <img src="/static/images/img_6.jpg" alt="Image placeholder" class="mr-4">
+                          <div class="text">
+                            <h4>How to Find the Video Games of Your Youth</h4>
+                            <div class="post-meta">
+                              <span class="mr-2">March 15, 2018 </span> &bullet;
+                              <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
+                            </div>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="">
+                          <img src="/static/images/img_3.jpg" alt="Image placeholder" class="mr-4">
+                          <div class="text">
+                            <h4>How to Find the Video Games of Your Youth</h4>
+                            <div class="post-meta">
+                              <span class="mr-2">March 15, 2018 </span> &bullet;
+                              <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
+                            </div>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="">
+                          <img src="/static/images/img_4.jpg" alt="Image placeholder" class="mr-4">
+                          <div class="text">
+                            <h4>How to Find the Video Games of Your Youth</h4>
+                            <div class="post-meta">
+                              <span class="mr-2">March 15, 2018 </span> &bullet;
+                              <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
+                            </div>
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+
+                <div class="col-md-4">
+                  <div class="mb-5">
+                    <h3>Mạng xã hội</h3>
+                    <ul class="list-unstyled footer-social">
+                      <li><a href="#"><span class="fa fa-twitter"></span> Twitter</a></li>
+                      <li><a href="#"><span class="fa fa-facebook"></span> Facebook</a></li>
+                      <li><a href="#"><span class="fa fa-instagram"></span> Instagram</a></li>
+                      <li><a href="#"><span class="fa fa-vimeo"></span> Vimeo</a></li>
+                      <li><a href="#"><span class="fa fa-youtube-play"></span> Youtube</a></li>
+                      <li><a href="#"><span class="fa fa-snapchat"></span> Snapshot</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <p class="small">
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+            </div>
+          </div>
+        </div>
+      </footer>
+  </body>
+</html>
